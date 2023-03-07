@@ -1,0 +1,13 @@
+﻿  CSP2104-Assignment-01.cpp
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-01\CSP2104-Assignment-01\CSP2104-Assignment-01.cpp(34,4): error C3861: 'LoadDictionary': identifier not found
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-01\CSP2104-Assignment-01\CSP2104-Assignment-01.cpp(40,4): error C3861: 'LoadDictionary': identifier not found
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-01\CSP2104-Assignment-01\CSP2104-Assignment-01.cpp(42,3): error C2360: initialization of 'dictionaryFileName' is skipped by 'case' label
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-01\CSP2104-Assignment-01\CSP2104-Assignment-01.cpp(38,11): message : see declaration of 'dictionaryFileName'
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-01\CSP2104-Assignment-01\CSP2104-Assignment-01.cpp(45,3): error C2360: initialization of 'dictionaryFileName' is skipped by 'case' label
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-01\CSP2104-Assignment-01\CSP2104-Assignment-01.cpp(38,11): message : see declaration of 'dictionaryFileName'
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-01\CSP2104-Assignment-01\CSP2104-Assignment-01.cpp(48,3): error C2360: initialization of 'dictionaryFileName' is skipped by 'case' label
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-01\CSP2104-Assignment-01\CSP2104-Assignment-01.cpp(38,11): message : see declaration of 'dictionaryFileName'
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-01\CSP2104-Assignment-01\CSP2104-Assignment-01.cpp(51,3): error C2360: initialization of 'dictionaryFileName' is skipped by 'case' label
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-01\CSP2104-Assignment-01\CSP2104-Assignment-01.cpp(38,11): message : see declaration of 'dictionaryFileName'
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-01\CSP2104-Assignment-01\CSP2104-Assignment-01.cpp(54,3): error C2361: initialization of 'dictionaryFileName' is skipped by 'default' label
+C:\Users\James\Documents\GitHub\CSP2104-Assignment-01\CSP2104-Assignment-01\CSP2104-Assignment-01.cpp(38,11): message : see declaration of 'dictionaryFileName'
