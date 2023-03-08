@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -9,8 +10,10 @@ struct Word
 	string definition;
 };
 
+
 int main()
 {
+	vector<Word> Dictionary; // Declared as global for use in functions outside main()
 	int userInput = 0;
 	//const string DEFAULT_DICTIONARY_NAME = "dictionary_2023S1.txt";
 	const string DEFAULT_DICTIONARY_NAME = "dictionary_test.txt";
@@ -31,7 +34,7 @@ int main()
 		{
 		case 1:
 			cout << "Loading default dictionary..." << endl;
-			LoadDictionary(DEFAULT_DICTIONARY_NAME);
+			LoadDictionary(Dictionary, DEFAULT_DICTIONARY_NAME);
 			break;
 		case 2:
 			cout << "Enter filename: " << endl;			
@@ -54,9 +57,12 @@ int main()
 	}
 }
 
-void LoadDictionary(string filename)
+void LoadDictionary(vector<Word> vector, string filename)
 {
 	// code to load dictionary file into STL vector
+	vector.clear();
+	Word newWord;
+	vector.push_back(newWord);
 }
 
 void SearchForWord(string targetWord)
@@ -72,4 +78,11 @@ void FindThreeZs()
 void AddWordToDictionary(Word addWord)
 {
 	// code to add word to STL vector
+}
+
+void PrintWordDetails(Word word)
+{
+	cout << word.name << endl;
+	cout << word.type << endl;
+	cout << word.definition << endl;
 }
