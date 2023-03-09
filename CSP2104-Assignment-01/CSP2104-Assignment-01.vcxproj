@@ -129,6 +129,9 @@
   <ItemGroup>
     <ClCompile Include="CSP2104-Assignment-01.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Word.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

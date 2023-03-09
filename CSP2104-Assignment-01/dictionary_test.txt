@@ -1,0 +1,92 @@
+2023-S1 dictionary contains 105160 words 
+
+<word>
+aa
+acronym for Associate in Arts a college degree granted for successful completion of a two-year course of study in arts or general topics;  Alcoholics Anonymous.
+n
+</word>
+<word>
+aaas
+the American Association for the Advancement of Science an organization with headquarters in Washington D.C. Its goal is to advance the physical and social sciences and it publishes a weekly journal Science with original research articles as well as reviews and commentary.
+n
+</word>
+<word>
+aam
+A Dutch and German measure of liquids varying in different cities being at Amsterdam about 41 wine gallons at Antwerp 3612 at Hamburg 3814.
+n
+</word>
+<word>
+aardvark
+An edentate mammal of the genus Orycteropus (Orycteropus afer) somewhat resembling a pig common in some parts of Southern Africa. It is a nocturnal ungulate burrows in the ground with its powerful claws and feeds entirely on ants and termites which it catches with its long extensile slimy tongue. It is the sole extant representative of the order Tubulidentata.
+n
+</word>
+<word>
+aard-wolf
+A carnivorous striped quadruped mammal (Proteles cristata formerly Proteles Lalandii) of South Africa resembling the fox and hyena. It feeds chiefly on insects. See Proteles.
+n
+</word>
+<word>
+aaronic
+Pertaining to Aaron the first high priest of the Jews.
+adj
+</word>
+<word>
+aarons-rod
+A rod with one serpent twined around it thus differing from the caduceus of Mercury which has two;  A plant with a tall flowering stem; esp. the great mullein or hag-taper and the golden-rod.
+misc
+</word>
+<word>
+aas
+an associate degree conferred for successful studies in applied science;  a loose sleeveless outer garment made from aba cloth; worn by Arabs.
+n
+</word>
+<word>
+ab
+The fifth month of the Jewish year according to the ecclesiastical reckoning the eleventh by the civil computation coinciding nearly with August.
+n
+</word>
+<word>
+ab-
+A prefix in many words of Latin origin. It signifies from away  separating or departure as in abduct abstract abscond. See A-(6).
+misc
+</word>
+<word>
+abaca
+The Manila-hemp plant (Musa textilis); also its fiber. See Manila hemp under Manila.
+n
+</word>
+<word>
+abacinate
+To blind by a red-hot metal plate held before the eyes.
+v
+</word>
+<word>
+abacination
+The act of abacinating.
+n
+</word>
+<word>
+abaciscus
+One of the tiles or squares of a tessellated pavement; an abaculus.
+n
+</word>
+<word>
+abacist
+One who uses an abacus in casting accounts; a calculator.
+n
+</word>
+<word>
+aback
+Toward the back or rear; backward;  Behind; in the rear;  Backward against the mast; -- said of the sails when pressed by the wind;  An abacus.
+adv
+</word>
+<word>
+abactinal
+Pertaining to the surface or end opposite to the mouth in a radiate animal; -- opposed to actinal.
+adj
+</word>
+<word>
+razzamatazz
+A flamboyant (gaudy) display intended to awe impress bewilder confuse or deceive. 2. razzle-dazzle.
+n
+</word>

@@ -1,5 +1,8 @@
 #include <iostream>
+#include <fstream>
 #include <vector>
+#include <string>
+#include "Word.h"
 
 using namespace std;
 
@@ -10,10 +13,69 @@ struct Word
 	string definition;
 };
 
+#pragma region FUNCTIONS
+
+void LoadDictionary(vector<Word> vector, string filename)
+{
+	// code to load dictionary file into STL vector
+	vector.clear();
+	fstream FileReader;
+	FileReader.open(filename, ios::in);
+	if (!FileReader) {
+		cout << "Error opening the file" << endl;
+	}
+	else {
+		cout << "File opened successfully" << endl;
+		string blank;
+		getline(FileReader, blank);
+		getline(FileReader, blank);
+		while (!FileReader.eof())
+		{
+			//Word newWord;
+			//getline(FileReader, blank);
+			//getline(FileReader, newWord.name);
+			//// code to read into vector
+			//Word newWord;
+			//vector.push_back(newWord);
+		}		
+		FileReader.close();
+	}
+}
+
+Word ParseWord(string dictionaryData)
+{
+	Word newWord;
+
+}
+
+void SearchForWord(string targetWord)
+{
+	// code to search STL vector for target word
+	string x;
+	//getline(cin, x, '/n');
+}
+
+void FindThreeZs()
+{
+	// code to find word with three 'z' characters in STL vector
+}
+
+void AddWordToDictionary(Word addWord)
+{
+	// code to add word to STL vector
+}
+
+void PrintWordDetails(Word word)
+{
+	cout << word.name << endl;
+	cout << word.definition << endl;
+	cout << word.type << endl;
+}
+#pragma endregion FUNCTIONS
 
 int main()
 {
-	vector<Word> Dictionary; // Declared as global for use in functions outside main()
+	vector<Word> Dictionary;
 	int userInput = 0;
 	//const string DEFAULT_DICTIONARY_NAME = "dictionary_2023S1.txt";
 	const string DEFAULT_DICTIONARY_NAME = "dictionary_test.txt";
@@ -28,7 +90,7 @@ int main()
 		cout << "Press 5 to add a word to the Dictionary" << endl;
 		cout << "Press 6 to exit" << endl;
 
-		cin >> userInput;
+		cin >> userInput; // TODO: Filter out non-integer input
 
 		switch (userInput)
 		{
@@ -57,32 +119,3 @@ int main()
 	}
 }
 
-void LoadDictionary(vector<Word> vector, string filename)
-{
-	// code to load dictionary file into STL vector
-	vector.clear();
-	Word newWord;
-	vector.push_back(newWord);
-}
-
-void SearchForWord(string targetWord)
-{
-	// code to search STL vector for target word
-}
-
-void FindThreeZs()
-{
-	// code to find word with three 'z' characters in STL vector
-}
-
-void AddWordToDictionary(Word addWord)
-{
-	// code to add word to STL vector
-}
-
-void PrintWordDetails(Word word)
-{
-	cout << word.name << endl;
-	cout << word.type << endl;
-	cout << word.definition << endl;
-}
