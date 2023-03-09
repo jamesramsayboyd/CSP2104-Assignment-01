@@ -9,16 +9,18 @@ using namespace std;
 struct Word 
 {
 	string name;
-	string type;
 	string definition;
+	string type;
 };
 
 #pragma region FUNCTIONS
 
-void LoadDictionary(vector<Word> vector, string filename)
+void LoadDictionary(vector<Word> Dictionary, string filename)
 {
 	// code to load dictionary file into STL vector
-	vector.clear();
+	//string delimiter = ".'/n'";
+	//string delimiter = ".\/n";
+	Dictionary.clear();
 	fstream FileReader;
 	FileReader.open(filename, ios::in);
 	if (!FileReader) {
@@ -26,38 +28,60 @@ void LoadDictionary(vector<Word> vector, string filename)
 	}
 	else {
 		cout << "File opened successfully" << endl;
-		string blank;
-		getline(FileReader, blank);
-		getline(FileReader, blank);
+		string skip;
+		getline(FileReader, skip);
+		getline(FileReader, skip);
 		while (!FileReader.eof())
 		{
 			//Word newWord;
-			//getline(FileReader, blank);
+			//getline(FileReader, skip);
 			//getline(FileReader, newWord.name);
-			//// code to read into vector
-			//Word newWord;
-			//vector.push_back(newWord);
+			//string definition;
+			//// read multi-line definition into string
+			//newWord.definition = definition;
+			//getline(FileReader, newWord.type);
+			//getline(FileReader, skip);
+			//Dictionary.push_back(newWord);
+
+			getline(FileReader, skip);
+			Word newWord;
+			newWord.name = "name";
+			newWord.type = "type";
+			newWord.definition = "definition";
+			Dictionary.push_back(newWord);
 		}		
 		FileReader.close();
 	}
 }
 
-Word ParseWord(string dictionaryData)
-{
-	Word newWord;
+//Word ParseWord(string dictionaryData)
+//{
+//	Word newWord;
+//}
 
+void SearchForWord(vector<Word> Dictionary, string targetWord)
+{
+	for (int i = 0; i < Dictionary.size(); i++)
+	{
+		/*if (strcmp(Dictionary[i].name), targetWord)
+		{
+			PrintWordDetails(Dictionary[i]);
+			break;
+		}*/
+	}
 }
 
-void SearchForWord(string targetWord)
-{
-	// code to search STL vector for target word
-	string x;
-	//getline(cin, x, '/n');
-}
-
-void FindThreeZs()
+void FindThreeZs(vector<Word> Dictionary)
 {
 	// code to find word with three 'z' characters in STL vector
+	for (int i = 0; i < Dictionary.size(); i++)
+	{
+		/*if (strcmp(Dictionary[i].name), "zz")
+		{
+			cout << "Word found;" << endl;
+			PrintWordDetails(Dictionary[i]);
+		}*/
+	}
 }
 
 void AddWordToDictionary(Word addWord)
@@ -67,9 +91,9 @@ void AddWordToDictionary(Word addWord)
 
 void PrintWordDetails(Word word)
 {
-	cout << word.name << endl;
-	cout << word.definition << endl;
-	cout << word.type << endl;
+	cout << "Word: " << word.name << endl;
+	cout << "Type: " << word.type << endl;
+	cout << "Definition: " << word.definition << endl;
 }
 #pragma endregion FUNCTIONS
 
@@ -97,6 +121,12 @@ int main()
 		case 1:
 			cout << "Loading default dictionary..." << endl;
 			LoadDictionary(Dictionary, DEFAULT_DICTIONARY_NAME);
+			cout << Dictionary[0].name << endl;
+			for (int i = 0; i < Dictionary.size(); i++)
+			{
+				//PrintWordDetails(Dictionary[i]);
+				cout << Dictionary[i].name << endl;
+			}
 			break;
 		case 2:
 			cout << "Enter filename: " << endl;			
@@ -106,6 +136,7 @@ int main()
 			break;
 		case 4:
 			cout << "Displaying all words containing more than three 'z' characters: " << endl;
+			FindThreeZs(Dictionary);
 			break;
 		case 5:
 			cout << "Enter word: " << endl;
