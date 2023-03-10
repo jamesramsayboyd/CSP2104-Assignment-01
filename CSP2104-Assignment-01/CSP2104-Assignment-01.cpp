@@ -17,9 +17,6 @@ struct Word
 
 void LoadDictionary(vector<Word> Dictionary, string filename)
 {
-	// code to load dictionary file into STL vector
-	//string delimiter = ".'/n'";
-	//string delimiter = ".\/n";
 	Dictionary.clear();
 	fstream FileReader;
 	FileReader.open(filename, ios::in);
@@ -28,39 +25,29 @@ void LoadDictionary(vector<Word> Dictionary, string filename)
 	}
 	else {
 		cout << "File opened successfully" << endl;
-		string skip;
-		getline(FileReader, skip);
-		getline(FileReader, skip);
+		string skipLine; // used to skip a line from the file (e.g. <word>, </word>, etc)
+		getline(FileReader, skipLine);
+		getline(FileReader, skipLine);
 		while (!FileReader.eof())
 		{
-			//Word newWord;
-			//getline(FileReader, skip);
-			//getline(FileReader, newWord.name);
-			//string definition;
-			//// read multi-line definition into string
-			//newWord.definition = definition;
-			//getline(FileReader, newWord.type);
-			//getline(FileReader, skip);
-			//Dictionary.push_back(newWord);
-
-			getline(FileReader, skip);
+			getline(FileReader, skipLine);
 			Word newWord;
-			newWord.name = "name";
-			newWord.type = "type";
-			newWord.definition = "definition";
+			getline(FileReader, newWord.name);
+			getline(FileReader, newWord.definition);
+			getline(FileReader, newWord.type);
+			getline(FileReader, skipLine);
+			//PrintWordDetails(newWord);
 			Dictionary.push_back(newWord);
 		}		
 		FileReader.close();
 	}
 }
 
-//Word ParseWord(string dictionaryData)
-//{
-//	Word newWord;
-//}
-
-void SearchForWord(vector<Word> Dictionary, string targetWord)
+void SearchForWord(vector<Word> Dictionary)
 {
+	string targetWord;
+	cout << "Enter word: " << endl;
+	cin >> targetWord;
 	for (int i = 0; i < Dictionary.size(); i++)
 	{
 		/*if (strcmp(Dictionary[i].name), targetWord)
@@ -94,6 +81,7 @@ void PrintWordDetails(Word word)
 	cout << "Word: " << word.name << endl;
 	cout << "Type: " << word.type << endl;
 	cout << "Definition: " << word.definition << endl;
+	cout << endl;
 }
 #pragma endregion FUNCTIONS
 
@@ -121,18 +109,12 @@ int main()
 		case 1:
 			cout << "Loading default dictionary..." << endl;
 			LoadDictionary(Dictionary, DEFAULT_DICTIONARY_NAME);
-			cout << Dictionary[0].name << endl;
-			for (int i = 0; i < Dictionary.size(); i++)
-			{
-				//PrintWordDetails(Dictionary[i]);
-				cout << Dictionary[i].name << endl;
-			}
 			break;
 		case 2:
 			cout << "Enter filename: " << endl;			
 			break;
 		case 3:
-			cout << "Enter word: " << endl;
+			SearchForWord(Dictionary);
 			break;
 		case 4:
 			cout << "Displaying all words containing more than three 'z' characters: " << endl;
