@@ -50,11 +50,13 @@ void SearchForWord(vector<Word> Dictionary)
 	cin >> targetWord;
 	for (int i = 0; i < Dictionary.size(); i++)
 	{
-		/*if (strcmp(Dictionary[i].name), targetWord)
+		int comparison = Dictionary[i].name.compare(targetWord);
+		if (comparison == 0)
 		{
 			PrintWordDetails(Dictionary[i]);
 			break;
-		}*/
+		}
+		cout << "Word not found" << endl;
 	}
 }
 
