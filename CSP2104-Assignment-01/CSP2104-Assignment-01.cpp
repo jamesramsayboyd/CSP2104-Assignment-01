@@ -36,7 +36,6 @@ void LoadDictionary(vector<Word> Dictionary, string filename)
 			getline(FileReader, newWord.definition);
 			getline(FileReader, newWord.type);
 			getline(FileReader, skipLine);
-			//PrintWordDetails(newWord);
 			Dictionary.push_back(newWord);
 		}		
 		FileReader.close();
