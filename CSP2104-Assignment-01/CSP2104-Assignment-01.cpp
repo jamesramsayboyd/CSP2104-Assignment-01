@@ -52,6 +52,7 @@ void SearchForWord(vector<Word> Dictionary)
 		int comparison = Dictionary[i].name.compare(targetWord);
 		if (comparison == 0)
 		{
+			cout << "Word found: " << endl;
 			PrintWordDetails(Dictionary[i]);
 			break;
 		}
