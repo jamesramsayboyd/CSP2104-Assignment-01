@@ -15,6 +15,14 @@ struct Word
 
 #pragma region FUNCTIONS
 
+void PrintWordDetails(Word word)
+{
+	cout << "Word: " << word.name << endl;
+	cout << "Type: " << word.type << endl;
+	cout << "Definition: " << word.definition << endl;
+	cout << endl;
+}
+
 void LoadDictionary(vector<Word> Dictionary, string filename)
 {
 	Dictionary.clear();
@@ -27,7 +35,7 @@ void LoadDictionary(vector<Word> Dictionary, string filename)
 		cout << "File opened successfully" << endl;
 		string skipLine; // used to skip a line from the file (e.g. <word>, </word>, etc)
 		getline(FileReader, skipLine);
-		getline(FileReader, skipLine);
+		getline(FileReader, skipLine); // skipping first two lines of dictionary.txt file
 		while (!FileReader.eof())
 		{
 			getline(FileReader, skipLine);
@@ -60,30 +68,37 @@ void SearchForWord(vector<Word> Dictionary)
 	}
 }
 
+/* A function that uses nested for loops to iterate through each character of each word
+When a 'z' character is found, the integer 'zCounter' is increased by 1. If zCounter
+reaches 3 or greater, the word details are displayed.*/
 void FindThreeZs(vector<Word> Dictionary)
 {
-	// code to find word with three 'z' characters in STL vector
 	for (int i = 0; i < Dictionary.size(); i++)
 	{
-		/*if (strcmp(Dictionary[i].name), "zz")
+		int zCounter = 0;
+		for (int j = 0; j < Dictionary[i].name.size(); j++)
 		{
-			cout << "Word found;" << endl;
-			PrintWordDetails(Dictionary[i]);
-		}*/
+			if (Dictionary[i].name[j] == 'z')
+			{
+				zCounter++;
+			}
+			if (zCounter > 2)
+			{
+				PrintWordDetails(Dictionary[i]);
+			}
+		}
 	}
 }
 
 void AddWordToDictionary(Word addWord)
 {
-	// code to add word to STL vector
-}
-
-void PrintWordDetails(Word word)
-{
-	cout << "Word: " << word.name << endl;
-	cout << "Type: " << word.type << endl;
-	cout << "Definition: " << word.definition << endl;
-	cout << endl;
+	Word addWord;
+	cout << "Enter a word:" << endl;
+	cin >> addWord.name;
+	cout << "Choose a word type:" << endl; // Add code allowing user to choose from a predefined list (verb, noun, etc)
+	cin >> addWord.type;
+	cout << "Enter a definition:" << endl;
+	cin >> addWord.definition;
 }
 #pragma endregion FUNCTIONS
 
@@ -111,6 +126,7 @@ int main()
 		case 1:
 			cout << "Loading default dictionary..." << endl;
 			LoadDictionary(Dictionary, DEFAULT_DICTIONARY_NAME);
+			//PrintWordDetails(Dictionary[0]);
 			break;
 		case 2:
 			cout << "Enter filename: " << endl;			
