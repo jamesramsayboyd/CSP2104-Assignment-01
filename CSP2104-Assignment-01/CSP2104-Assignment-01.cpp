@@ -15,14 +15,24 @@ struct Word
 
 #pragma region FUNCTIONS
 
+/* A function that prints the details of a word (name, type, definition)
+to the console in a nicely formatted manner. Used repeatedly throughout 
+the program */
 void PrintWordDetails(Word word)
 {
 	cout << "Word: " << word.name << endl;
-	cout << "Type: " << word.type << endl;
+	cout << "Type: " << word.type << endl; // Add code to turn word.type ('n', 'v') into "Noun", "Verb", etc
 	cout << "Definition: " << word.definition << endl;
 	cout << endl;
 }
 
+/* A function to load the contents of a .txt file into the vector as objects of type Word
+.txt file should be in format:
+<word>
+word name
+word type
+word definition
+</word> */
 void LoadDictionary(vector<Word> Dictionary, string filename)
 {
 	Dictionary.clear();
@@ -50,7 +60,12 @@ void LoadDictionary(vector<Word> Dictionary, string filename)
 	}
 }
 
-void SearchForWord(vector<Word> Dictionary)
+/* A function to search for a user-entered word in the dictionary vector.
+The user is prompted to enter a string token as a search target. The function then
+loops through the dictionary comparing the name property of each Word object to
+the user's search target. If a match is found, the for loop breaks and the word's
+information is printed to the console */
+bool SearchForWord(vector<Word> Dictionary, string targetWord)
 {
 	string targetWord;
 	cout << "Enter word: " << endl;
@@ -62,9 +77,12 @@ void SearchForWord(vector<Word> Dictionary)
 		{
 			cout << "Word found: " << endl;
 			PrintWordDetails(Dictionary[i]);
+			// Consider returning a boolean from the function to indicate a successful/unsuccessful search
+			return true;
 			break;
 		}
 		cout << "Word not found" << endl;
+		return false;
 	}
 }
 
@@ -90,11 +108,20 @@ void FindThreeZs(vector<Word> Dictionary)
 	}
 }
 
-void AddWordToDictionary(Word addWord)
+/* A function that allows the user to add a word to the dictionary. The user is prompted
+to enter a word name, a word type (chosen from a pre-defined list) and a definition. If valid, 
+the word is */
+void AddWordToDictionary()
 {
+	string addWord;
+	cout << "Enter a word: " << endl;
+	cin >> addWord;
+	if (!SearchForWord(addWord))
+
 	Word addWord;
 	cout << "Enter a word:" << endl;
 	cin >> addWord.name;
+	SearchForWord
 	cout << "Choose a word type:" << endl; // Add code allowing user to choose from a predefined list (verb, noun, etc)
 	cin >> addWord.type;
 	cout << "Enter a definition:" << endl;
@@ -123,29 +150,44 @@ int main()
 
 		switch (userInput)
 		{
-		case 1:
-			cout << "Loading default dictionary..." << endl;
-			LoadDictionary(Dictionary, DEFAULT_DICTIONARY_NAME);
-			//PrintWordDetails(Dictionary[0]);
-			break;
-		case 2:
-			cout << "Enter filename: " << endl;			
-			break;
-		case 3:
-			SearchForWord(Dictionary);
-			break;
-		case 4:
-			cout << "Displaying all words containing more than three 'z' characters: " << endl;
-			FindThreeZs(Dictionary);
-			break;
-		case 5:
-			cout << "Enter word: " << endl;
-			break;
-		case 6:
-			cout << "Goodbye" << endl;
-			break;
-		default:
-			break;
+			case 1:
+			{
+				cout << "Loading default dictionary..." << endl;
+				LoadDictionary(Dictionary, DEFAULT_DICTIONARY_NAME);
+				//PrintWordDetails(Dictionary[0]);
+				break;
+			}
+			case 2:
+			{
+				cout << "Enter filename: " << endl;
+				break;
+			}
+			case 3:
+			{
+				string addWord;
+				cout << "Enter word" << endl;
+				cin >> addWord;
+				SearchForWord(Dictionary, addWord);
+				break;
+			}
+			case 4:
+			{
+				cout << "Displaying all words containing more than three 'z' characters: " << endl;
+				FindThreeZs(Dictionary);
+				break;
+			}
+			case 5:
+			{
+				cout << "Enter word: " << endl;
+				break;
+			}
+			case 6:
+			{
+				cout << "Goodbye" << endl;
+				break;
+			}
+			default:
+				break;
 		}
 	}
 }
