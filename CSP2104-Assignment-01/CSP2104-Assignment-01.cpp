@@ -33,6 +33,7 @@ word name
 word type
 word definition
 </word> */
+// TODO: Consider making bool return type for successful/unsuccessful load
 void LoadDictionary(vector<Word> Dictionary, string filename)
 {
 	Dictionary.clear();
@@ -40,6 +41,7 @@ void LoadDictionary(vector<Word> Dictionary, string filename)
 	FileReader.open(filename, ios::in);
 	if (!FileReader) {
 		cout << "Error opening the file" << endl;
+		return;
 	}
 	else {
 		cout << "File opened successfully" << endl;
@@ -67,12 +69,12 @@ the user's search target. If a match is found, the for loop breaks and the word'
 information is printed to the console */
 bool SearchForWord(vector<Word> Dictionary, string targetWord)
 {
-	string targetWord;
+	/*string targetWord;
 	cout << "Enter word: " << endl;
-	cin >> targetWord;
+	cin >> targetWord;*/
 	for (int i = 0; i < Dictionary.size(); i++)
 	{
-		int comparison = Dictionary[i].name.compare(targetWord);
+		int comparison = Dictionary[i].name.compare(targetWord); // TODO: Make comparison case-insensitive
 		if (comparison == 0)
 		{
 			cout << "Word found: " << endl;
@@ -81,7 +83,7 @@ bool SearchForWord(vector<Word> Dictionary, string targetWord)
 			return true;
 			break;
 		}
-		cout << "Word not found" << endl;
+		cout << "Word not found" << endl; // TODO: Follow user messaging sequence
 		return false;
 	}
 }
@@ -111,21 +113,22 @@ void FindThreeZs(vector<Word> Dictionary)
 /* A function that allows the user to add a word to the dictionary. The user is prompted
 to enter a word name, a word type (chosen from a pre-defined list) and a definition. If valid, 
 the word is */
-void AddWordToDictionary()
+void AddWordToDictionary(vector<Word> Dictionary, string addWord)
 {
-	string addWord;
-	cout << "Enter a word: " << endl;
-	cin >> addWord;
-	if (!SearchForWord(addWord))
-
-	Word addWord;
-	cout << "Enter a word:" << endl;
-	cin >> addWord.name;
-	SearchForWord
-	cout << "Choose a word type:" << endl; // Add code allowing user to choose from a predefined list (verb, noun, etc)
-	cin >> addWord.type;
-	cout << "Enter a definition:" << endl;
-	cin >> addWord.definition;
+	if (!SearchForWord(Dictionary, addWord))
+	{
+		Word wordToAdd;
+		wordToAdd.name = addWord;
+		cout << "Choose a word type:" << endl; // TODO: Add code allowing user to choose from a predefined list (verb, noun, etc)
+		cin >> wordToAdd.type;
+		cout << "Enter a definition:" << endl;
+		cin >> wordToAdd.definition; // TODO: Capture entire line, not just single string token
+	}
+	else
+	{
+		cout << "Word already exists in dictionary" << endl;
+		return;
+	}
 }
 #pragma endregion FUNCTIONS
 
@@ -150,38 +153,45 @@ int main()
 
 		switch (userInput)
 		{
-			case 1:
+			case 1: // Load default dictionary .txt file into vector<Word> data structure
 			{
 				cout << "Loading default dictionary..." << endl;
 				LoadDictionary(Dictionary, DEFAULT_DICTIONARY_NAME);
 				//PrintWordDetails(Dictionary[0]);
 				break;
 			}
-			case 2:
+			case 2: // Load a user-specified .txt file into vector<Word> data structure
 			{
+				string filename;
 				cout << "Enter filename: " << endl;
+				LoadDictionary(Dictionary, filename);
+				cout << "Dictionary " << filename << " loaded" << endl;
 				break;
+				// TODO: Error trapping for file not found
 			}
-			case 3:
+			case 3: // User is prompted to search for a word in the dictionary
 			{
-				string addWord;
-				cout << "Enter word" << endl;
-				cin >> addWord;
-				SearchForWord(Dictionary, addWord);
+				string targetWord;
+				cout << "Enter word:" << endl;
+				cin >> targetWord;
+				SearchForWord(Dictionary, targetWord);
 				break;
 			}
-			case 4:
+			case 4: // Displays any/all words in the dictionary containing more than three 'z' characters
 			{
 				cout << "Displaying all words containing more than three 'z' characters: " << endl;
 				FindThreeZs(Dictionary);
 				break;
 			}
-			case 5:
+			case 5: // User is prompted to add a word to the dictionary
 			{
+				string addWord;
 				cout << "Enter word: " << endl;
+				cin >> addWord;
+				AddWordToDictionary(Dictionary, addWord);
 				break;
 			}
-			case 6:
+			case 6: // User chooses to exit the program
 			{
 				cout << "Goodbye" << endl;
 				break;
