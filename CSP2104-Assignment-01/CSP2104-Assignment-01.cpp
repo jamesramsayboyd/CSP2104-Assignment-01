@@ -75,12 +75,12 @@ bool SearchForWord(vector<Word> *Dictionary, string targetWord)
 	cout << "Enter word: " << endl;
 	cin >> targetWord;*/
 	for (int i = 0; i < Dictionary->size(); i++)
-	{
-		int comparison = Dictionary[i].name.compare(targetWord); // TODO: Make comparison case-insensitive
+	{	
+		int comparison = (*Dictionary)[i].name.compare(targetWord); // TODO: Make comparison case-insensitive
 		if (comparison == 0)
 		{
 			cout << "Word found: " << endl;
-			PrintWordDetails(Dictionary[i]);
+			PrintWordDetails((*Dictionary)[i]);
 			// Consider returning a boolean from the function to indicate a successful/unsuccessful search
 			return true;
 			break;
@@ -98,15 +98,15 @@ void FindThreeZs(vector<Word> *Dictionary)
 	for (int i = 0; i < Dictionary->size(); i++)
 	{
 		int zCounter = 0;
-		for (int j = 0; j < Dictionary[i].name.size(); j++)
+		for (int j = 0; j < (*Dictionary)[i].name.size(); j++)
 		{
-			if (Dictionary[i].name[j] == 'z')
+			if ((*Dictionary)[i].name[j] == 'z')
 			{
 				zCounter++;
 			}
 			if (zCounter > 2)
 			{
-				PrintWordDetails(Dictionary[i]);
+				PrintWordDetails((*Dictionary)[i]);
 			}
 		}
 	}
@@ -115,7 +115,7 @@ void FindThreeZs(vector<Word> *Dictionary)
 /* A function that allows the user to add a word to the dictionary. The user is prompted
 to enter a word name, a word type (chosen from a pre-defined list) and a definition. If valid, 
 the word is */
-void AddWordToDictionary(vector<Word> Dictionary, string addWord)
+void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 {
 	if (!SearchForWord(Dictionary, addWord))
 	{
@@ -190,7 +190,7 @@ int main()
 				string addWord;
 				cout << "Enter word: " << endl;
 				cin >> addWord;
-				AddWordToDictionary(Dictionary, addWord);
+				AddWordToDictionary(&Dictionary, addWord);
 				break;
 			}
 			case 6: // User chooses to exit the program
