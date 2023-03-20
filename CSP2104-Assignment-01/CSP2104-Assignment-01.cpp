@@ -34,9 +34,10 @@ word type
 word definition
 </word> */
 // TODO: Consider making bool return type for successful/unsuccessful load
-void LoadDictionary(vector<Word> Dictionary, string filename)
+void LoadDictionary(vector<Word> *Dictionary, string filename)
 {
-	Dictionary.clear();
+	//*Dictionary.clear();
+	Dictionary->clear();
 	fstream FileReader;
 	FileReader.open(filename, ios::in);
 	if (!FileReader) {
@@ -56,7 +57,8 @@ void LoadDictionary(vector<Word> Dictionary, string filename)
 			getline(FileReader, newWord.definition);
 			getline(FileReader, newWord.type);
 			getline(FileReader, skipLine);
-			Dictionary.push_back(newWord);
+			//*Dictionary.push_back(newWord);
+			Dictionary->push_back(newWord);
 		}		
 		FileReader.close();
 	}
@@ -67,12 +69,12 @@ The user is prompted to enter a string token as a search target. The function th
 loops through the dictionary comparing the name property of each Word object to
 the user's search target. If a match is found, the for loop breaks and the word's
 information is printed to the console */
-bool SearchForWord(vector<Word> Dictionary, string targetWord)
+bool SearchForWord(vector<Word> *Dictionary, string targetWord)
 {
 	/*string targetWord;
 	cout << "Enter word: " << endl;
 	cin >> targetWord;*/
-	for (int i = 0; i < Dictionary.size(); i++)
+	for (int i = 0; i < Dictionary->size(); i++)
 	{
 		int comparison = Dictionary[i].name.compare(targetWord); // TODO: Make comparison case-insensitive
 		if (comparison == 0)
@@ -91,9 +93,9 @@ bool SearchForWord(vector<Word> Dictionary, string targetWord)
 /* A function that uses nested for loops to iterate through each character of each word
 When a 'z' character is found, the integer 'zCounter' is increased by 1. If zCounter
 reaches 3 or greater, the word details are displayed.*/
-void FindThreeZs(vector<Word> Dictionary)
+void FindThreeZs(vector<Word> *Dictionary)
 {
-	for (int i = 0; i < Dictionary.size(); i++)
+	for (int i = 0; i < Dictionary->size(); i++)
 	{
 		int zCounter = 0;
 		for (int j = 0; j < Dictionary[i].name.size(); j++)
@@ -156,15 +158,15 @@ int main()
 			case 1: // Load default dictionary .txt file into vector<Word> data structure
 			{
 				cout << "Loading default dictionary..." << endl;
-				LoadDictionary(Dictionary, DEFAULT_DICTIONARY_NAME);
-				//PrintWordDetails(Dictionary[0]);
+				LoadDictionary(&Dictionary, DEFAULT_DICTIONARY_NAME);
+				PrintWordDetails(Dictionary[0]);
 				break;
 			}
 			case 2: // Load a user-specified .txt file into vector<Word> data structure
 			{
 				string filename;
 				cout << "Enter filename: " << endl;
-				LoadDictionary(Dictionary, filename);
+				LoadDictionary(&Dictionary, filename);
 				cout << "Dictionary " << filename << " loaded" << endl;
 				break;
 				// TODO: Error trapping for file not found
@@ -174,13 +176,13 @@ int main()
 				string targetWord;
 				cout << "Enter word:" << endl;
 				cin >> targetWord;
-				SearchForWord(Dictionary, targetWord);
+				SearchForWord(&Dictionary, targetWord);
 				break;
 			}
 			case 4: // Displays any/all words in the dictionary containing more than three 'z' characters
 			{
 				cout << "Displaying all words containing more than three 'z' characters: " << endl;
-				FindThreeZs(Dictionary);
+				FindThreeZs(&Dictionary);
 				break;
 			}
 			case 5: // User is prompted to add a word to the dictionary
