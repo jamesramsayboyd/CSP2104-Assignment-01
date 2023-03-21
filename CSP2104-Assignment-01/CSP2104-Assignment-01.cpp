@@ -85,7 +85,7 @@ bool SearchForWord(vector<Word> *Dictionary, string targetWord)
 			return true;
 			break;
 		}
-		cout << "Word not found" << endl; // TODO: Follow user messaging sequence
+		//cout << "Word not found" << endl; // TODO: Follow user messaging sequence
 		return false;
 	}
 }
@@ -128,7 +128,7 @@ void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 	}
 	else
 	{
-		cout << "Word already exists in dictionary" << endl;
+		//cout << "Word already exists in dictionary" << endl;
 		return;
 	}
 }
