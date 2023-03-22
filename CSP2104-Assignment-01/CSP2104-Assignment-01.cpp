@@ -49,6 +49,7 @@ void LoadDictionary(vector<Word> *Dictionary, string filename)
 		string skipLine; // used to skip a line from the file (e.g. <word>, </word>, etc)
 		getline(FileReader, skipLine);
 		getline(FileReader, skipLine); // skipping first two lines of dictionary.txt file
+		// TODO: Find a way of reading until '<word>', creating Word object, ending at '</word>', repeat
 		while (!FileReader.eof())
 		{
 			getline(FileReader, skipLine);
@@ -57,7 +58,6 @@ void LoadDictionary(vector<Word> *Dictionary, string filename)
 			getline(FileReader, newWord.definition);
 			getline(FileReader, newWord.type);
 			getline(FileReader, skipLine);
-			//*Dictionary.push_back(newWord);
 			Dictionary->push_back(newWord);
 		}		
 		FileReader.close();
