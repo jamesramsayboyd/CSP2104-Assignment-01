@@ -71,6 +71,7 @@ the user's search target. If a match is found, the for loop breaks and the word'
 information is printed to the console */
 bool SearchForWord(vector<Word> *Dictionary, string targetWord)
 {
+	// TODO: Refactor this whole thing as a binary search algorithm
 	/*string targetWord;
 	cout << "Enter word: " << endl;
 	cin >> targetWord;*/
