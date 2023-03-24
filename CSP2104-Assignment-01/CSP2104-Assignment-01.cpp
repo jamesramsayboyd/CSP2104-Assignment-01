@@ -62,18 +62,18 @@ word type
 word definition
 </word> */
 // TODO: Consider making bool return type for successful/unsuccessful load
-void LoadDictionary(vector<Word> *Dictionary, string filename)
+bool LoadDictionary(vector<Word> *Dictionary, string filename)
 {
 	//*Dictionary.clear();
 	Dictionary->clear();
 	fstream FileReader;
 	FileReader.open(filename, ios::in);
 	if (!FileReader) {
-		cout << "Error opening the file" << endl;
-		return;
+		//cout << "Error opening the file" << endl;
+		return false;
 	}
 	else {
-		cout << "File opened successfully" << endl;
+		//cout << "File opened successfully" << endl;
 		string skipLine; // used to skip a line from the file (e.g. <word>, </word>, etc)
 		getline(FileReader, skipLine);
 		getline(FileReader, skipLine); // skipping first two lines of dictionary.txt file
@@ -89,34 +89,62 @@ void LoadDictionary(vector<Word> *Dictionary, string filename)
 			Dictionary->push_back(newWord);
 		}		
 		FileReader.close();
+		return true;
 	}
 }
 
 /* A function to search for a user-entered word in the dictionary vector.
 The user is prompted to enter a string token as a search target. The function then
-loops through the dictionary comparing the name property of each Word object to
-the user's search target. If a match is found, the for loop breaks and the word's
-information is printed to the console */
+uses a binary search algorithm to search for the word in the dictionary. If a match 
+is found, the word's information is printed to the console. The function returns a 
+boolean so it can be used within other functions (e.g. the AddWord() function that
+checks whether a word to be added already exists within the dictionary) */
 bool SearchForWord(vector<Word> *Dictionary, string targetWord)
 {
-	// TODO: Refactor this whole thing as a binary search algorithm
-	/*string targetWord;
-	cout << "Enter word: " << endl;
-	cin >> targetWord;*/
-	for (int i = 0; i < Dictionary->size(); i++)
-	{	
-		int comparison = (*Dictionary)[i].name.compare(targetWord); // TODO: Make comparison case-insensitive
+	int lowerBound = 0;
+	int upperBound = Dictionary->size();
+	int mid = 0;
+	bool found = false;
+
+	while (lowerBound <= upperBound)
+	{
+		mid = (upperBound + lowerBound) / 2;
+		int comparison = (*Dictionary)[mid].name.compare(targetWord);
 		if (comparison == 0)
 		{
-			cout << "Word found: " << endl;
-			PrintWordDetails((*Dictionary)[i]);
-			// Consider returning a boolean from the function to indicate a successful/unsuccessful search
+			PrintWordDetails((*Dictionary)[mid]);
+			found = true;
 			return true;
-			break;
 		}
-		//cout << "Word not found" << endl; // TODO: Follow user messaging sequence
+		else if (comparison < 0)
+		{
+			lowerBound = mid + 1;
+		}
+		else
+		{
+			upperBound = mid - 1;
+		}
+	}
+
+	if (!found)
+	{
 		return false;
 	}
+
+	//for (int i = 0; i < Dictionary->size(); i++)
+	//{	
+	//	int comparison = (*Dictionary)[i].name.compare(targetWord); // TODO: Make comparison case-insensitive
+	//	if (comparison == 0)
+	//	{
+	//		cout << "Word found: " << endl;
+	//		PrintWordDetails((*Dictionary)[i]);
+	//		// Consider returning a boolean from the function to indicate a successful/unsuccessful search
+	//		return true;
+	//		break;
+	//	}
+	//	//cout << "Word not found" << endl; // TODO: Follow user messaging sequence
+	//	return false;
+	//}
 }
 
 /* A function that uses nested for loops to iterate through each character of each word
