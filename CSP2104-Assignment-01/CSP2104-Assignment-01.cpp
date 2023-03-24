@@ -34,6 +34,10 @@ void PrintWordDetails(Word word)
 	{
 		cout << "[adverb]" << endl;
 	}
+	else if (word.type == "adj")
+	{
+		cout << "[adjective]" << endl;
+	}
 	else if (word.type == "prep")
 	{
 		cout << "[preposition]" << endl;
@@ -51,7 +55,6 @@ void PrintWordDetails(Word word)
 		cout << "[noun and verb]" << endl;
 	}
 	cout << "Definition: " << word.definition << endl;
-	cout << endl;
 }
 
 /* A function to load the contents of a .txt file into the vector as objects of type Word
@@ -73,20 +76,19 @@ bool LoadDictionary(vector<Word> *Dictionary, string filename)
 		return false;
 	}
 	else {
-		//cout << "File opened successfully" << endl;
-		string skipLine; // used to skip a line from the file (e.g. <word>, </word>, etc)
-		getline(FileReader, skipLine);
-		getline(FileReader, skipLine); // skipping first two lines of dictionary.txt file
-		// TODO: Find a way of reading until '<word>', creating Word object, ending at '</word>', repeat
+		cout << "Loading file \"" << filename << "\"..." << endl;
 		while (!FileReader.eof())
 		{
-			getline(FileReader, skipLine);
-			Word newWord;
-			getline(FileReader, newWord.name);
-			getline(FileReader, newWord.definition);
-			getline(FileReader, newWord.type);
-			getline(FileReader, skipLine);
-			Dictionary->push_back(newWord);
+			string line;
+			getline(FileReader, line);
+			if (line == "<word>")
+			{
+				Word newWord;
+				getline(FileReader, newWord.name);
+				getline(FileReader, newWord.definition);
+				getline(FileReader, newWord.type);
+				Dictionary->push_back(newWord);
+			}
 		}		
 		FileReader.close();
 		return true;
@@ -111,7 +113,7 @@ bool SearchForWord(vector<Word> *Dictionary, string targetWord)
 		int comparison = (*Dictionary)[mid].name.compare(targetWord);
 		if (comparison == 0)
 		{
-			PrintWordDetails((*Dictionary)[mid]);
+			PrintWordDetails((*Dictionary)[mid]); // TODO: Don't make it print the word
 			found = true;
 			return true;
 		}
@@ -149,7 +151,6 @@ void FindThreeZs(vector<Word> *Dictionary)
 		if (zCounter > 2)
 		{
 			PrintWordDetails((*Dictionary)[i]);
-			i++;
 		}
 	}
 }
@@ -217,15 +218,17 @@ int main()
 	//const string DEFAULT_DICTIONARY_NAME = "dictionary_2023S1.txt";
 	const string DEFAULT_DICTIONARY_NAME = "dictionary_test.txt";
 
+	cout << "Welcome to the Dictionary" << endl;
 	while (userInput != 6)
 	{
-		cout << "Welcome to the Dictionary" << endl;
+		cout << endl;
 		cout << "Press 1 to load the default Dictionary file" << endl;
 		cout << "Press 2 to enter a specified Dictionary filename" << endl;
 		cout << "Press 3 to search for a word" << endl;
 		cout << "Press 4 to find all words containing more than three 'z' characters" << endl;
 		cout << "Press 5 to add a word to the Dictionary" << endl;
 		cout << "Press 6 to exit" << endl;
+		cout << endl;
 
 		cin >> userInput; // TODO: Filter out non-integer input
 
@@ -233,19 +236,27 @@ int main()
 		{
 			case 1: // Load default dictionary .txt file into vector<Word> data structure
 			{
-				cout << "Loading default dictionary..." << endl;
 				LoadDictionary(&Dictionary, DEFAULT_DICTIONARY_NAME);
-				PrintWordDetails(Dictionary[0]);
+				//PrintWordDetails(Dictionary[0]);
 				break;
 			}
 			case 2: // Load a user-specified .txt file into vector<Word> data structure
 			{
 				string filename;
 				cout << "Enter filename: " << endl;
-				LoadDictionary(&Dictionary, filename);
-				cout << "Dictionary " << filename << " loaded" << endl;
+				cin >> filename;
+				if (!LoadDictionary(&Dictionary, filename))
+				{
+					cout << "ERROR: File not found" << endl;
+				}
+				else
+				{
+					cout << "File loaded successfully" << endl;
+					//PrintWordDetails(Dictionary[0]);
+					//PrintWordDetails(Dictionary[5000]);
+				}
+				//cout << "Dictionary " << filename << " loaded" << endl;
 				break;
-				// TODO: Error trapping for file not found
 			}
 			case 3: // User is prompted to search for a word in the dictionary
 			{
