@@ -21,7 +21,35 @@ the program */
 void PrintWordDetails(Word word)
 {
 	cout << "Word: " << word.name << endl;
-	cout << "Type: " << word.type << endl; // Add code to turn word.type ('n', 'v') into "Noun", "Verb", etc
+	cout << "Type: ";
+	if (word.type == "n")
+	{
+		cout << "[noun]" << endl;
+	}
+	else if (word.type == "v")
+	{
+		cout << "[verb]" << endl;
+	}
+	else if (word.type == "adv")
+	{
+		cout << "[adverb]" << endl;
+	}
+	else if (word.type == "prep")
+	{
+		cout << "[preposition]" << endl;
+	}
+	else if (word.type == "misc")
+	{
+		cout << "[miscellaneous]" << endl;
+	}
+	else if (word.type == "pn")
+	{
+		cout << "[proper noun]" << endl;
+	}
+	else if (word.type == "n_and_v")
+	{
+		cout << "[noun and verb]" << endl;
+	}
 	cout << "Definition: " << word.definition << endl;
 	cout << endl;
 }
