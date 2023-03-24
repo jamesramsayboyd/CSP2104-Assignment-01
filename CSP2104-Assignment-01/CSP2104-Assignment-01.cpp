@@ -230,7 +230,22 @@ int main()
 		cout << "Press 6 to exit" << endl;
 		cout << endl;
 
-		cin >> userInput; // TODO: Filter out non-integer input
+		//try {
+		//	cin >> userInput; // TODO: Filter out non-integer input
+		//}
+		//catch (...)
+		//{
+		//	cout << "Please enter a valid integer between 1 and 6" << endl;
+		//}
+		//cin >> userInput; // TODO: Filter out non-integer input
+
+		cin >> userInput;
+		if (cin.fail())
+		{
+			cout << "Please enter a valid integer between 1 and 6" << endl;
+			cin.clear();
+			cin >> userInput;
+		}
 
 		switch (userInput)
 		{
