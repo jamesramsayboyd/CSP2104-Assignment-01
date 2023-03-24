@@ -93,8 +93,7 @@ bool LoadDictionary(vector<Word> *Dictionary, string filename)
 	}
 }
 
-/* A function to search for a user-entered word in the dictionary vector.
-The user is prompted to enter a string token as a search target. The function then
+/* A function to search for a user-entered word in the dictionary vector. The function then
 uses a binary search algorithm to search for the word in the dictionary. If a match 
 is found, the word's information is printed to the console. The function returns a 
 boolean so it can be used within other functions (e.g. the AddWord() function that
@@ -130,21 +129,6 @@ bool SearchForWord(vector<Word> *Dictionary, string targetWord)
 	{
 		return false;
 	}
-
-	//for (int i = 0; i < Dictionary->size(); i++)
-	//{	
-	//	int comparison = (*Dictionary)[i].name.compare(targetWord); // TODO: Make comparison case-insensitive
-	//	if (comparison == 0)
-	//	{
-	//		cout << "Word found: " << endl;
-	//		PrintWordDetails((*Dictionary)[i]);
-	//		// Consider returning a boolean from the function to indicate a successful/unsuccessful search
-	//		return true;
-	//		break;
-	//	}
-	//	//cout << "Word not found" << endl; // TODO: Follow user messaging sequence
-	//	return false;
-	//}
 }
 
 /* A function that uses nested for loops to iterate through each character of each word
@@ -161,10 +145,11 @@ void FindThreeZs(vector<Word> *Dictionary)
 			{
 				zCounter++;
 			}
-			if (zCounter > 2)
-			{
-				PrintWordDetails((*Dictionary)[i]);
-			}
+		}
+		if (zCounter > 2)
+		{
+			PrintWordDetails((*Dictionary)[i]);
+			i++;
 		}
 	}
 }
@@ -176,16 +161,50 @@ void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 {
 	if (!SearchForWord(Dictionary, addWord))
 	{
+		int wordTypeChoice;
 		Word wordToAdd;
 		wordToAdd.name = addWord;
-		cout << "Choose a word type:" << endl; // TODO: Add code allowing user to choose from a predefined list (verb, noun, etc)
-		cin >> wordToAdd.type;
+
+		cout << "Choose a word type:" << endl;
+		cout << "1: Noun  2: Verb  3: Adverb  4: Adjective  5: Preposition  6: Miscellaneous  7: Proper Noun  8: Noun and Verb" << endl;
+		cin >> wordTypeChoice;
+		switch (wordTypeChoice)
+		{
+			case 1:
+				wordToAdd.type = "n";
+				break;
+			case 2:
+				wordToAdd.type = "v";
+				break;
+			case 3:
+				wordToAdd.type = "adv";
+				break;
+			case 4:
+				wordToAdd.type = "adj";
+				break;
+			case 5:
+				wordToAdd.type = "prep";
+				break;
+			case 6:
+				wordToAdd.type = "misc";
+				break;
+			case 7:
+				wordToAdd.type = "pn";
+				break;
+			case 8:
+				wordToAdd.type = "n_and_v";
+				break;
+			default:
+				break;
+		}
 		cout << "Enter a definition:" << endl;
 		cin >> wordToAdd.definition; // TODO: Capture entire line, not just single string token
+		Dictionary->push_back(wordToAdd);
+		// TODO: Add code to save the dictionary file with a user-provided filename
 	}
 	else
 	{
-		//cout << "Word already exists in dictionary" << endl;
+		cout << "ERROR: Word exists, elevated privileges required to edit existing words" << endl;
 		return;
 	}
 }
