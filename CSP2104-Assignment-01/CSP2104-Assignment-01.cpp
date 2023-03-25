@@ -104,6 +104,10 @@ boolean so it can be used within other functions (e.g. the AddWord() function th
 checks whether a word to be added already exists within the dictionary) */
 bool SearchForWord(vector<Word> *Dictionary, string targetWord)
 {
+	for (int i = 0; i < targetWord.length(); i++)
+	{
+		targetWord[i] = tolower(targetWord[i]); // Converting search target to all lower case for case-insensitive searches
+	}
 	int lowerBound = 0;
 	int upperBound = Dictionary->size();
 	int mid = 0;
