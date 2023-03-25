@@ -54,6 +54,10 @@ void PrintWordDetails(Word word)
 	{
 		cout << "[noun and verb]" << endl;
 	}
+	else
+	{
+		cout << "[unknown]" << endl;
+ 	}
 	cout << "Definition: " << word.definition << endl;
 }
 
@@ -63,16 +67,14 @@ void PrintWordDetails(Word word)
 word name
 word type
 word definition
-</word> */
-// TODO: Consider making bool return type for successful/unsuccessful load
+</word> 
+etc */
 bool LoadDictionary(vector<Word> *Dictionary, string filename)
 {
-	//*Dictionary.clear();
 	Dictionary->clear();
 	fstream FileReader;
 	FileReader.open(filename, ios::in);
 	if (!FileReader) {
-		//cout << "Error opening the file" << endl;
 		return false;
 	}
 	else {
@@ -110,7 +112,7 @@ bool SearchForWord(vector<Word> *Dictionary, string targetWord)
 	while (lowerBound <= upperBound)
 	{
 		mid = (upperBound + lowerBound) / 2;
-		int comparison = (*Dictionary)[mid].name.compare(targetWord);
+		int comparison = (*Dictionary)[mid].name.compare(targetWord); // todo: make this work with "-" words
 		if (comparison == 0)
 		{
 			PrintWordDetails((*Dictionary)[mid]); // TODO: Don't make it print the word
@@ -214,45 +216,34 @@ void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 int main()
 {
 	vector<Word> Dictionary;
+	bool running = true;
+	bool fileLoaded = false;
 	int userInput = 0;
 	//const string DEFAULT_DICTIONARY_NAME = "dictionary_2023S1.txt";
 	const string DEFAULT_DICTIONARY_NAME = "dictionary_test.txt";
 
 	cout << "Welcome to the Dictionary" << endl;
-	while (userInput != 6)
+
+	while (running)
 	{
-		cout << endl;
-		cout << "Press 1 to load the default Dictionary file" << endl;
-		cout << "Press 2 to enter a specified Dictionary filename" << endl;
-		cout << "Press 3 to search for a word" << endl;
-		cout << "Press 4 to find all words containing more than three 'z' characters" << endl;
-		cout << "Press 5 to add a word to the Dictionary" << endl;
-		cout << "Press 6 to exit" << endl;
-		cout << endl;
-
-		//try {
-		//	cin >> userInput; // TODO: Filter out non-integer input
-		//}
-		//catch (...)
-		//{
-		//	cout << "Please enter a valid integer between 1 and 6" << endl;
-		//}
-		//cin >> userInput; // TODO: Filter out non-integer input
-
-		cin >> userInput;
-		if (cin.fail())
+		if (!fileLoaded)
 		{
-			cout << "Please enter a valid integer between 1 and 6" << endl;
-			cin.clear();
+			cout << endl;
+			cout << "Press 1 to load the default Dictionary file" << endl;
+			cout << "Press 2 to enter a specified Dictionary filename" << endl;
+			cout << endl;
+
 			cin >> userInput;
-		}
 
-		switch (userInput)
-		{
+			switch (userInput)
+			{
 			case 1: // Load default dictionary .txt file into vector<Word> data structure
 			{
-				LoadDictionary(&Dictionary, DEFAULT_DICTIONARY_NAME);
-				//PrintWordDetails(Dictionary[0]);
+				if (LoadDictionary(&Dictionary, DEFAULT_DICTIONARY_NAME))
+				{
+					fileLoaded = true;
+					cout << "File loaded successfully" << endl;
+				}
 				break;
 			}
 			case 2: // Load a user-specified .txt file into vector<Word> data structure
@@ -266,14 +257,46 @@ int main()
 				}
 				else
 				{
+					fileLoaded = true;
 					cout << "File loaded successfully" << endl;
-					//PrintWordDetails(Dictionary[0]);
-					//PrintWordDetails(Dictionary[5000]);
 				}
-				//cout << "Dictionary " << filename << " loaded" << endl;
 				break;
 			}
-			case 3: // User is prompted to search for a word in the dictionary
+			default:
+				break;
+			}
+		}
+
+		else
+		{
+			cout << endl;
+			cout << "Press 1 to search for a word" << endl;
+			cout << "Press 2 to find all words containing more than three 'z' characters" << endl;
+			cout << "Press 3 to add a word to the Dictionary" << endl;
+			cout << "Press 4 to load a different Dictionary file" << endl;
+			cout << "Press 5 to exit" << endl;
+			cout << endl;
+
+			//try {
+			//	cin >> userInput; // TODO: Filter out non-integer input
+			//}
+			//catch (...)
+			//{
+			//	cout << "Please enter a valid integer between 1 and 6" << endl;
+			//}
+			//cin >> userInput; // TODO: Filter out non-integer input
+
+			cin >> userInput;
+			if (cin.fail())
+			{
+				cout << "Please enter a valid integer between 1 and 6" << endl;
+				cin.clear();
+				cin >> userInput;
+			}
+
+			switch (userInput)
+			{
+			case 1: // User is prompted to search for a word in the dictionary
 			{
 				string targetWord;
 				cout << "Enter word:" << endl;
@@ -281,13 +304,13 @@ int main()
 				SearchForWord(&Dictionary, targetWord);
 				break;
 			}
-			case 4: // Displays any/all words in the dictionary containing more than three 'z' characters
+			case 2: // Displays any/all words in the dictionary containing more than three 'z' characters
 			{
 				cout << "Displaying all words containing more than three 'z' characters: " << endl;
 				FindThreeZs(&Dictionary);
 				break;
 			}
-			case 5: // User is prompted to add a word to the dictionary
+			case 3: // User is prompted to add a word to the dictionary
 			{
 				string addWord;
 				cout << "Enter word: " << endl;
@@ -295,14 +318,133 @@ int main()
 				AddWordToDictionary(&Dictionary, addWord);
 				break;
 			}
-			case 6: // User chooses to exit the program
+			case 4: // User can return to the initial menu to load a different dictionary file
+			{
+				fileLoaded = false;
+				break;
+				//break;
+			}
+			case 5: // User chooses to exit the program
 			{
 				cout << "Goodbye" << endl;
+				running = false;
 				break;
 			}
 			default:
 				break;
+			}
 		}
 	}
+	//while (!fileLoaded)
+	//if (!fileLoaded)
+	//{
+	//	cout << "Press 1 to load the default Dictionary file" << endl;
+	//	cout << "Press 2 to enter a specified Dictionary filename" << endl;
+	//	cin >> userInput;
+
+	//	switch (userInput)
+	//	{
+	//	case 1: // Load default dictionary .txt file into vector<Word> data structure
+	//	{
+	//		if (LoadDictionary(&Dictionary, DEFAULT_DICTIONARY_NAME))
+	//		{
+	//			fileLoaded = true;
+	//		}
+	//		//PrintWordDetails(Dictionary[0]);
+	//		break;
+	//	}
+	//	case 2: // Load a user-specified .txt file into vector<Word> data structure
+	//	{
+	//		string filename;
+	//		cout << "Enter filename: " << endl;
+	//		cin >> filename;
+	//		if (!LoadDictionary(&Dictionary, filename))
+	//		{
+	//			cout << "ERROR: File not found" << endl;
+	//		}
+	//		else
+	//		{
+	//			cout << "File loaded successfully" << endl;
+	//			//PrintWordDetails(Dictionary[0]);
+	//			//PrintWordDetails(Dictionary[5000]);
+	//		}
+	//		//cout << "Dictionary " << filename << " loaded" << endl;
+	//		break;
+	//	}
+	//	default:
+	//		break;
+	//	}
+	//}
+	//
+	//
+
+	////while (userInput != 6)
+	////while (fileLoaded)
+	//if (fileLoaded)
+	//{
+	//	cout << endl;
+	//	cout << "Press 1 to search for a word" << endl;
+	//	cout << "Press 2 to find all words containing more than three 'z' characters" << endl;
+	//	cout << "Press 3 to add a word to the Dictionary" << endl;
+	//	cout << "Press 4 to load a different Dictionary file" << endl;
+	//	cout << "Press 5 to exit" << endl;
+	//	cout << endl;
+
+	//	//try {
+	//	//	cin >> userInput; // TODO: Filter out non-integer input
+	//	//}
+	//	//catch (...)
+	//	//{
+	//	//	cout << "Please enter a valid integer between 1 and 6" << endl;
+	//	//}
+	//	//cin >> userInput; // TODO: Filter out non-integer input
+
+	//	cin >> userInput;
+	//	if (cin.fail())
+	//	{
+	//		cout << "Please enter a valid integer between 1 and 6" << endl;
+	//		cin.clear();
+	//		cin >> userInput;
+	//	}
+
+	//	switch (userInput)
+	//	{
+	//		case 1: // User is prompted to search for a word in the dictionary
+	//		{
+	//			string targetWord;
+	//			cout << "Enter word:" << endl;
+	//			cin >> targetWord;
+	//			SearchForWord(&Dictionary, targetWord);
+	//			break;
+	//		}
+	//		case 2: // Displays any/all words in the dictionary containing more than three 'z' characters
+	//		{
+	//			cout << "Displaying all words containing more than three 'z' characters: " << endl;
+	//			FindThreeZs(&Dictionary);
+	//			break;
+	//		}
+	//		case 3: // User is prompted to add a word to the dictionary
+	//		{
+	//			string addWord;
+	//			cout << "Enter word: " << endl;
+	//			cin >> addWord;
+	//			AddWordToDictionary(&Dictionary, addWord);
+	//			break;
+	//		}
+	//		case 4: // User can return to the initial menu to load a different dictionary file
+	//		{
+	//			fileLoaded = false;
+	//			break;
+	//			//break;
+	//		}
+	//		case 5: // User chooses to exit the program
+	//		{
+	//			cout << "Goodbye" << endl;
+	//			break;
+	//		}
+	//		default:
+	//			break;
+	//	}
+	//}
 }
 
