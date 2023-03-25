@@ -107,12 +107,18 @@ bool SearchForWord(vector<Word> *Dictionary, string targetWord)
 	int lowerBound = 0;
 	int upperBound = Dictionary->size();
 	int mid = 0;
+	string midWord = "default";
 	bool found = false;
 
 	while (lowerBound <= upperBound)
 	{
 		mid = (upperBound + lowerBound) / 2;
-		int comparison = (*Dictionary)[mid].name.compare(targetWord); // todo: make this work with "-" words
+		midWord = (*Dictionary)[mid].name;
+		if (!isalpha(midWord[0])) // Extra check needed because some words in the provided dictionary file start with a "-" character
+		{
+			midWord = midWord.substr(1, -1);
+		}
+		int comparison = (midWord.compare(targetWord));
 		if (comparison == 0)
 		{
 			PrintWordDetails((*Dictionary)[mid]); // TODO: Don't make it print the word
