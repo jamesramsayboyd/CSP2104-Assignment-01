@@ -18,50 +18,7 @@ struct Word
 /* A function that prints the details of a word (name, type, definition)
 to the console in a nicely formatted manner. Used repeatedly throughout 
 the program */
-void PrintWordDetails(Word word)
-{
-	cout << "Word: " << word.name << endl;
-	cout << "Type: ";
-	if (word.type == "n")
-	{
-		cout << "[noun]" << endl;
-	}
-	else if (word.type == "v")
-	{
-		cout << "[verb]" << endl;
-	}
-	else if (word.type == "adv")
-	{
-		cout << "[adverb]" << endl;
-	}
-	else if (word.type == "adj")
-	{
-		cout << "[adjective]" << endl;
-	}
-	else if (word.type == "prep")
-	{
-		cout << "[preposition]" << endl;
-	}
-	else if (word.type == "misc")
-	{
-		cout << "[miscellaneous]" << endl;
-	}
-	else if (word.type == "pn")
-	{
-		cout << "[proper noun]" << endl;
-	}
-	else if (word.type == "n_and_v")
-	{
-		cout << "[noun and verb]" << endl;
-	}
-	else
-	{
-		cout << "[unknown]" << endl;
- 	}
-	cout << "Definition: " << word.definition << endl;
-}
-
-void PrintWordDetailsInt(vector<Word>* Dictionary, int index)
+void PrintWordDetails(vector<Word>* Dictionary, int index)
 {
 	if (index < 0)
 	{
@@ -153,49 +110,7 @@ uses a binary search algorithm to search for the word in the dictionary. If a ma
 is found, the word's information is printed to the console. The function returns a 
 boolean so it can be used within other functions (e.g. the AddWord() function that
 checks whether a word to be added already exists within the dictionary) */
-bool SearchForWord(vector<Word> *Dictionary, string targetWord)
-{
-	for (int i = 0; i < targetWord.length(); i++)
-	{
-		targetWord[i] = tolower(targetWord[i]); // Converting search target to all lower case for case-insensitive searches
-	}
-	int lowerBound = 0;
-	int upperBound = Dictionary->size();
-	int mid = 0;
-	bool found = false;
-
-	while (lowerBound < upperBound)
-	{
-		mid = (upperBound + lowerBound) / 2;
-		string midWord = (*Dictionary)[mid].name;
-		if (!isalpha(midWord[0])) // Extra check needed because some words in the provided dictionary file start with a "-" character
-		{
-			midWord = midWord.substr(1, -1);
-		}
-		int comparison = (midWord.compare(targetWord));
-		if (comparison == 0)
-		{
-			PrintWordDetails((*Dictionary)[mid]); // TODO: Don't make it print the word
-			//found = true;
-			return true;
-		}
-		else if (comparison < 0)
-		{
-			lowerBound = mid + 1;
-		}
-		else
-		{
-			upperBound = mid;
-		}
-	}
-
-	if (!found)
-	{
-		return false;
-	}
-}
-
-int SearchForWordInt(vector<Word>* Dictionary, string targetWord)
+int SearchForWord(vector<Word>* Dictionary, string targetWord)
 {
 	for (int i = 0; i < targetWord.length(); i++)
 	{
@@ -252,7 +167,7 @@ void FindThreeZs(vector<Word> *Dictionary)
 		}
 		if (zCounter > 2)
 		{
-			PrintWordDetails((*Dictionary)[i]);
+			PrintWordDetails(Dictionary, i);
 		}
 	}
 }
@@ -399,16 +314,8 @@ int main()
 				string targetWord;
 				cout << "Enter word:" << endl;
 				cin >> targetWord;
-				//if (SearchForWord(&Dictionary, targetWord))
-				//{
-				//	// print word
-				//}
-				//else
-				//{
-				//	cout << "Word not found" << endl;
-				//}
-				int printIndex = SearchForWordInt(&Dictionary, targetWord);
-				PrintWordDetailsInt(&Dictionary, printIndex);
+				int printIndex = SearchForWord(&Dictionary, targetWord);
+				PrintWordDetails(&Dictionary, printIndex);
 				break;
 			}
 			case 2: // Displays any/all words in the dictionary containing more than three 'z' characters
