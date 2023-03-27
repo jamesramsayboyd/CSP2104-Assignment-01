@@ -226,6 +226,16 @@ void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 		return;
 	}
 }
+
+bool CheckForValidInput(int min, int max, int userInput)
+{
+	if (userInput > min && userInput <= max) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
 #pragma endregion FUNCTIONS
 
 int main()
@@ -249,7 +259,15 @@ int main()
 			cout << "Press 3 to exit" << endl;
 			cout << endl;
 
-			cin >> userInput;
+			// Filters out non-integer input. TODO: Limit it to between 1 and 3
+			while (!(cin >> userInput))
+			{
+				cin.clear();
+				string temp;
+				cin >> temp; // Creating a temp variable to store the invalid input without using it
+				cout << "ERROR: Please enter an integer between 1 and 3" << endl;
+				cout << endl;
+			}
 
 			switch (userInput)
 			{
