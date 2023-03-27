@@ -15,6 +15,14 @@ struct Word
 
 #pragma region FUNCTIONS
 
+/* A function to determine whether the user's input matches the numbered integer options
+provided by a multiple choice menu. All numbered menus range from 1 - a maximum figure that
+must be provided when the function is called */
+bool CheckForValidInput(int max, int userInput)
+{
+	return ((userInput >= 1) && (userInput <= max));
+}
+
 /* A function that prints the details of a word (name, type, definition)
 to the console in a nicely formatted manner. Used repeatedly throughout 
 the program */
@@ -177,7 +185,7 @@ to enter a word name, a word type (chosen from a pre-defined list) and a definit
 the word is */
 void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 {
-	if (!SearchForWord(Dictionary, addWord))
+	if (SearchForWord(Dictionary, addWord) < 0)
 	{
 		int wordTypeChoice;
 		Word wordToAdd;
@@ -185,7 +193,17 @@ void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 
 		cout << "Choose a word type:" << endl;
 		cout << "1: Noun  2: Verb  3: Adverb  4: Adjective  5: Preposition  6: Miscellaneous  7: Proper Noun  8: Noun and Verb" << endl;
-		cin >> wordTypeChoice;
+		
+		int tempData;
+		while (!(cin >> tempData) || !CheckForValidInput(8, tempData))
+		{
+			cin.clear();
+			cin.ignore();
+			cout << "ERROR: Please enter an integer between 1 and 8" << endl;
+			cout << endl;
+		}
+		wordTypeChoice = tempData;
+
 		switch (wordTypeChoice)
 		{
 			case 1:
@@ -227,13 +245,6 @@ void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 	}
 }
 
-/* A function to determine whether the user's input matches the numbered integer options
-provided by a multiple choice menu */
-bool CheckForValidInput(int min, int max, int userInput)
-{
-	return ((userInput >= min) && (userInput <= max));
-}
-
 #pragma endregion FUNCTIONS
 
 int main()
@@ -258,7 +269,7 @@ int main()
 			cout << endl;
 
 			int tempData;
-			while (!(cin >> tempData) || !CheckForValidInput(1, 3, tempData))
+			while (!(cin >> tempData) || !CheckForValidInput(3, tempData))
 			{
 				cin.clear();
 				cin.ignore();
@@ -316,7 +327,7 @@ int main()
 			cout << endl;
 
 			int tempData;
-			while (!(cin >> tempData) || !CheckForValidInput(1, 5, tempData))
+			while (!(cin >> tempData) || !CheckForValidInput(5, tempData))
 			{
 				cin.clear();
 				cin.ignore();
