@@ -227,15 +227,13 @@ void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 	}
 }
 
+/* A function to determine whether the user's input matches the numbered integer options
+provided by a multiple choice menu */
 bool CheckForValidInput(int min, int max, int userInput)
 {
-	if (userInput > min && userInput <= max) {
-		return true;
-	}
-	else {
-		return false;
-	}
+	return ((userInput >= min) && (userInput <= max));
 }
+
 #pragma endregion FUNCTIONS
 
 int main()
@@ -259,15 +257,15 @@ int main()
 			cout << "Press 3 to exit" << endl;
 			cout << endl;
 
-			// Filters out non-integer input. TODO: Limit it to between 1 and 3
-			while (!(cin >> userInput))
+			int tempData;
+			while (!(cin >> tempData) || !CheckForValidInput(1, 3, tempData))
 			{
 				cin.clear();
-				string temp;
-				cin >> temp; // Creating a temp variable to store the invalid input without using it
+				cin.ignore();
 				cout << "ERROR: Please enter an integer between 1 and 3" << endl;
 				cout << endl;
 			}
+			userInput = tempData;
 
 			switch (userInput)
 			{
@@ -317,13 +315,15 @@ int main()
 			cout << "Press 5 to exit" << endl;
 			cout << endl;
 
-			cin >> userInput;
-			/*if (cin.fail())
+			int tempData;
+			while (!(cin >> tempData) || !CheckForValidInput(1, 5, tempData))
 			{
-				cout << "Please enter a valid integer between 1 and 6" << endl;
 				cin.clear();
-				cin >> userInput;
-			}*/
+				cin.ignore();
+				cout << "ERROR: Please enter an integer between 1 and 5" << endl;
+				cout << endl;
+			}
+			userInput = tempData;
 
 			switch (userInput)
 			{
