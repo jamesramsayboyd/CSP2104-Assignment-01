@@ -113,6 +113,35 @@ bool LoadDictionary(vector<Word> *Dictionary, string filename)
 	}
 }
 
+bool SaveDictionaryToFile(vector<Word>* Dictionary)
+{
+	string data;
+	cout << "Enter a filename to save the dictionary file (.txt format)" << endl;
+	cin >> data;
+	string saveFileName = data + ".txt";
+
+	fstream FileWriter;
+	FileWriter.open(saveFileName, ios::out);
+	if (!FileWriter) {
+		return false;
+	}
+	else {
+		FileWriter << "2023-S1 dictionary contains " << Dictionary->size() << " words" << endl;
+		FileWriter << endl;
+
+		for (int i = 0; i < Dictionary->size(); i++)
+		{
+			FileWriter << "<word>" << endl;
+			FileWriter << (*Dictionary)[i].name << endl;
+			FileWriter << (*Dictionary)[i].type << endl;
+			FileWriter << (*Dictionary)[i].definition << endl;
+			FileWriter << "</word>" << endl;
+		}
+		FileWriter.close();
+		return true;
+	}
+}
+
 /* A function to search for a user-entered word in the dictionary vector. The function then
 uses a binary search algorithm to search for the word in the dictionary. If a match 
 is found, the word's information is printed to the console. The function returns a 
@@ -242,6 +271,7 @@ void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 
 		Dictionary->push_back(wordToAdd);
 		// TODO: Add code to save the dictionary file with a user-provided filename
+		//SaveDictionaryToFile(Dictionary);
 	}
 	else
 	{
@@ -364,6 +394,7 @@ int main()
 				cout << "Enter word: " << endl;
 				cin >> addWord;
 				AddWordToDictionary(&Dictionary, addWord);
+				SaveDictionaryToFile(&Dictionary);
 				break;
 			}
 			case 4: // User can return to the initial menu to load a different dictionary file
