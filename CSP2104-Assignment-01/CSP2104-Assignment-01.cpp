@@ -233,8 +233,13 @@ void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 			default:
 				break;
 		}
+
+		string s = "temp";
 		cout << "Enter a definition:" << endl;
-		cin >> wordToAdd.definition; // TODO: Capture entire line, not just single string token
+		std::getline(cin, s); // dummy getline() call to consume the trailing newline from the word type code above
+		std::getline(cin, s);
+		wordToAdd.definition = s;
+
 		Dictionary->push_back(wordToAdd);
 		// TODO: Add code to save the dictionary file with a user-provided filename
 	}
