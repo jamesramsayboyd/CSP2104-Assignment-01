@@ -2,30 +2,42 @@
 #include <fstream>
 #include <vector>
 #include <string>
-//#include "Word.h"
+#include "Word.h"
 
 using namespace std;
 
-struct Word 
-{
-	string name;
-	string definition;
-	string type;
-};
-
 #pragma region FUNCTIONS
 
-/* A function to determine whether the user's input matches the numbered integer options
-provided by a multiple choice menu. All numbered menus range from 1 - a maximum figure that
-must be provided when the function is called */
-bool CheckForValidInput(int max, int userInput)
+/* James Boyd, Student ID: 10629572, 28/3/2023
+A function to limit integer input to between 1 and a maximum number provided as an
+argument. Function returns true if the number is within the lower and upper limits. */
+bool CheckMaxMinLimit(int max, int userInput)
 {
 	return ((userInput >= 1) && (userInput <= max));
 }
 
-/* A function that prints the details of a word (name, type, definition)
-to the console in a nicely formatted manner. Used repeatedly throughout 
-the program */
+/* James Boyd, Student ID: 10629572, 29/3/2023
+A function to determine whether the user has provided a valid integer input for the program's
+numbered menu choices. Input must be an integer and must be between the lowest and highest 
+number options in the menu. All menus start at 1 and the largest value is provided as an argument
+when the function is called. Invalid input is met with an error message. */
+int CheckForValidIntInput(int max)
+{		
+	int tempData;
+	while (!(cin >> tempData) || !CheckMaxMinLimit(max, tempData))
+	{
+		cin.clear();
+		cin.ignore();
+		cout << "ERROR: Please enter an integer between 1 and " << max << endl;
+		cout << endl;
+	}
+	return tempData;
+}
+
+/* James Boyd, Student ID: 10629572, 8/3/2023
+A function that prints the details of a word (name, type, definition) to the console formatted 
+in the manner specified in Task 2, Table 1 of the assignment document. Used repeatedly throughout 
+the program. Requires a vector<Word> and an index value to print a word's details. */
 void PrintWordDetails(vector<Word>* Dictionary, int index)
 {
 	if (index < 0)
@@ -77,14 +89,15 @@ void PrintWordDetails(vector<Word>* Dictionary, int index)
 	}	
 }
 
-/* A function to load the contents of a .txt file into the vector as objects of type Word
+/* James Boyd, Student ID: 10629572, 24/3/2023
+A function to load the contents of a .txt file into the vector as objects of type Word
 .txt file should be in format:
 <word>
 word name
 word type
 word definition
 </word> 
-etc */
+etc, as specified in Task 1 of the assignment document. */
 bool LoadDictionary(vector<Word> *Dictionary, string filename)
 {
 	Dictionary->clear();
@@ -99,7 +112,7 @@ bool LoadDictionary(vector<Word> *Dictionary, string filename)
 		{
 			string line;
 			getline(FileReader, line);
-			if (line == "<word>")
+			if (line == "<word>") // FileReader object reads line by line until reaching the open <word> tag
 			{
 				Word newWord;
 				getline(FileReader, newWord.name);
@@ -113,6 +126,9 @@ bool LoadDictionary(vector<Word> *Dictionary, string filename)
 	}
 }
 
+/* James Boyd, Student ID: 10629572, 27/3/2023
+A function that saves all Word objects in the provided vector<Word> to a .txt file. The user is prompted
+to enter an appropriate filename, as specified in Task 4 of the assignment document. */
 bool SaveDictionaryToFile(vector<Word>* Dictionary)
 {
 	string data;
@@ -138,15 +154,16 @@ bool SaveDictionaryToFile(vector<Word>* Dictionary)
 			FileWriter << "</word>" << endl;
 		}
 		FileWriter.close();
+		cout << "File " << saveFileName << " saved" << endl;
 		return true;
 	}
 }
 
-/* A function to search for a user-entered word in the dictionary vector. The function then
+/* James Boyd, Student ID: 10629572, 24/3/2023
+A function to search for a user-entered word in the dictionary vector. The function then
 uses a binary search algorithm to search for the word in the dictionary. If a match 
-is found, the word's information is printed to the console. The function returns a 
-boolean so it can be used within other functions (e.g. the AddWord() function that
-checks whether a word to be added already exists within the dictionary) */
+is found, the word's information is printed to the console. The function returns the integer 
+index of the word if found, or -1 if not found. */
 int SearchForWord(vector<Word>* Dictionary, string targetWord)
 {
 	for (int i = 0; i < targetWord.length(); i++)
@@ -187,9 +204,10 @@ int SearchForWord(vector<Word>* Dictionary, string targetWord)
 	}
 }
 
-/* A function that uses nested for loops to iterate through each character of each word
+/* James Boyd, Student ID: 10629572, 17/3/2023
+A function that uses nested for loops to iterate through each character of each word
 When a 'z' character is found, the integer 'zCounter' is increased by 1. If zCounter
-reaches 3 or greater, the word details are displayed.*/
+reaches 3 or greater, the word details are displayed, as specified in Task 3 of the assignment document. */
 void FindThreeZs(vector<Word> *Dictionary)
 {
 	for (int i = 0; i < Dictionary->size(); i++)
@@ -209,10 +227,12 @@ void FindThreeZs(vector<Word> *Dictionary)
 	}
 }
 
-/* A function that allows the user to add a word to the dictionary. The user is prompted
+/* James Boyd, Student ID: 10629572, 28/3/2023
+A function that allows the user to add a word to the dictionary. The user is prompted
 to enter a word name, a word type (chosen from a pre-defined list) and a definition. If valid, 
-the word is */
-void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
+the word is added to the dictionary, as specified in Task 4 of the assignment document. Error
+message is word already exists in dictionary. */
+bool AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 {
 	if (SearchForWord(Dictionary, addWord) < 0)
 	{
@@ -220,18 +240,11 @@ void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 		Word wordToAdd;
 		wordToAdd.name = addWord;
 
+		const int MENU_SIZE = 8; // Eight options in this menu
 		cout << "Choose a word type:" << endl;
 		cout << "1: Noun  2: Verb  3: Adverb  4: Adjective  5: Preposition  6: Miscellaneous  7: Proper Noun  8: Noun and Verb" << endl;
 		
-		int tempData;
-		while (!(cin >> tempData) || !CheckForValidInput(8, tempData))
-		{
-			cin.clear();
-			cin.ignore();
-			cout << "ERROR: Please enter an integer between 1 and 8" << endl;
-			cout << endl;
-		}
-		wordTypeChoice = tempData;
+		wordTypeChoice = CheckForValidIntInput(MENU_SIZE);
 
 		switch (wordTypeChoice)
 		{
@@ -263,20 +276,19 @@ void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 				break;
 		}
 
-		string s = "temp";
+		string tempDefinition = "";
 		cout << "Enter a definition:" << endl;
-		std::getline(cin, s); // dummy getline() call to consume the trailing newline from the word type code above
-		std::getline(cin, s);
-		wordToAdd.definition = s;
+		getline(cin, tempDefinition); // dummy getline() call to consume the trailing newline from the word type code above
+		getline(cin, tempDefinition);
+		wordToAdd.definition = tempDefinition;
 
 		Dictionary->push_back(wordToAdd);
-		// TODO: Add code to save the dictionary file with a user-provided filename
-		//SaveDictionaryToFile(Dictionary);
+		return true;
 	}
 	else
 	{
 		cout << "ERROR: Word exists, elevated privileges required to edit existing words" << endl;
-		return;
+		return false;
 	}
 }
 
@@ -285,11 +297,10 @@ void AddWordToDictionary(vector<Word> *Dictionary, string addWord)
 int main()
 {
 	vector<Word> Dictionary;
-	bool running = true;
-	bool fileLoaded = false;
+	bool running = true; // A boolean tracking whether the program is running, updated to false when the user chooses to exit
+	bool fileLoaded = false; // A boolean tracking whether a .txt file has been loaded
 	int userInput = 0;
-	//const string DEFAULT_DICTIONARY_NAME = "dictionary_2023S1.txt";
-	const string DEFAULT_DICTIONARY_NAME = "dictionary_test.txt";
+	const string DEFAULT_DICTIONARY_NAME = "dictionary_2023S1.txt"; // The .txt file provided for the assignment
 
 	cout << "Welcome to the Dictionary" << endl;
 
@@ -297,21 +308,14 @@ int main()
 	{
 		if (!fileLoaded)
 		{
+			const int MENU_SIZE = 3; // Three choices in this menu
 			cout << endl;
 			cout << "Press 1 to load the default Dictionary file" << endl;
 			cout << "Press 2 to enter a specified Dictionary filename" << endl;
 			cout << "Press 3 to exit" << endl;
 			cout << endl;
 
-			int tempData;
-			while (!(cin >> tempData) || !CheckForValidInput(3, tempData))
-			{
-				cin.clear();
-				cin.ignore();
-				cout << "ERROR: Please enter an integer between 1 and 3" << endl;
-				cout << endl;
-			}
-			userInput = tempData;
+			userInput = CheckForValidIntInput(MENU_SIZE);
 
 			switch (userInput)
 			{
@@ -340,7 +344,7 @@ int main()
 				}
 				break;
 			}
-			case 3:
+			case 3: // User chooses to exit the program
 			{
 				cout << "Goodbye" << endl;
 				running = false;
@@ -353,6 +357,7 @@ int main()
 
 		else
 		{
+			const int MENU_SIZE = 5; // Five options in this menu
 			cout << endl;
 			cout << "Press 1 to search for a word" << endl;
 			cout << "Press 2 to find all words containing more than three 'z' characters" << endl;
@@ -361,15 +366,7 @@ int main()
 			cout << "Press 5 to exit" << endl;
 			cout << endl;
 
-			int tempData;
-			while (!(cin >> tempData) || !CheckForValidInput(5, tempData))
-			{
-				cin.clear();
-				cin.ignore();
-				cout << "ERROR: Please enter an integer between 1 and 5" << endl;
-				cout << endl;
-			}
-			userInput = tempData;
+			userInput = CheckForValidIntInput(MENU_SIZE);
 
 			switch (userInput)
 			{
@@ -393,8 +390,9 @@ int main()
 				string addWord;
 				cout << "Enter word: " << endl;
 				cin >> addWord;
-				AddWordToDictionary(&Dictionary, addWord);
-				SaveDictionaryToFile(&Dictionary);
+				if (AddWordToDictionary(&Dictionary, addWord)) {
+					SaveDictionaryToFile(&Dictionary);
+				}				
 				break;
 			}
 			case 4: // User can return to the initial menu to load a different dictionary file
